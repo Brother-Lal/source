@@ -757,7 +757,16 @@ define Device/tl-wr1043nd-v3
     DEVICE_PROFILE := TLWR1043
     TPLINK_HWID := 0x10430003
 endef
-TARGET_DEVICES += tl-wr1043nd-v1 tl-wr1043nd-v2 tl-wr1043nd-v3
+
+define Device/tl-wr1043nd-v4
+    $(Device/tplink-16mlzma)
+    DEVICE_TITLE := TP-LINK TL-WR1043N/ND v4
+    DEVICE_PACKAGES := kmod-usb-core kmod-usb2 kmod-usb-ledtrig-usbport
+    BOARDNAME := TL-WR1043ND-v4
+    DEVICE_PROFILE := TLWR1043
+    TPLINK_HWID := 0x10430004
+endef
+TARGET_DEVICES += tl-wr1043nd-v1 tl-wr1043nd-v2 tl-wr1043nd-v3 tl-wr1043nd-v4
 
 define Device/tl-wr2543-v1
     $(Device/tplink-8mlzma)

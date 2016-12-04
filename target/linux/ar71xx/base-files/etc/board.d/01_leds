@@ -618,7 +618,8 @@ tl-wr842n-v3)
 	esac
 	;;
 tl-wr1043nd|\
-tl-wr1043nd-v2)
+tl-wr1043nd-v2|\
+tl-wr1043nd-v4)
 	ucidef_set_led_usbdev "usb" "USB" "tp-link:green:usb" "1-1"
 	ucidef_set_led_wlan "wlan" "WLAN" "tp-link:green:wlan" "phy0tpt"
 	;;
