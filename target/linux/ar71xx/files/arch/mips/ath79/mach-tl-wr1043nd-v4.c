@@ -37,7 +37,6 @@
 #include "machtypes.h"
 #include "nvram.h"
 
-
 #define TL_WR1043_V4_GPIO_BTN_RESET		2
 #define TL_WR1043_V4_GPIO_BTN_RFKILL	5
 
@@ -45,13 +44,10 @@
 #define TL_WR1043_V4_GPIO_SWITCH_MODE	8
 #define TL_WR1043_V4_GPIO_ENABLE_SWITCH	11
 
-
 #define TL_WR1043_V4_GPIO_LED_WLAN	19
 #define TL_WR1043_V4_GPIO_LED_USB	7
 #define TL_WR1043_V4_GPIO_LED_WPS	1
 #define TL_WR1043_V4_GPIO_LED_SYSTEM	6
-
-
 
 #define TL_WR1043_V4_KEYS_POLL_INTERVAL	20 /* msecs */
 #define TL_WR1043_V4_KEYS_DEBOUNCE_INTERVAL	(3 * TL_WR1043_V4_KEYS_POLL_INTERVAL)
@@ -74,7 +70,7 @@ static struct flash_platform_data wr1043nd_v4_flash_data = {
 	.part_probes	= wr1043nd_v4_part_probes,
 };
 
-static struct gpio_led tl_wr1043_v4_leds_gpio[] __initdata = {
+static struct gpio_led tl_wr1043nd_v4_leds_gpio[] __initdata = {
 	{
 		.name		= "tp-link:green:wps",
 		.gpio		= TL_WR1043_V4_GPIO_LED_WPS,
@@ -97,7 +93,7 @@ static struct gpio_led tl_wr1043_v4_leds_gpio[] __initdata = {
 	},
 };
 
-static struct gpio_keys_button tl_wr1043_v4_gpio_keys[] __initdata = {
+static struct gpio_keys_button tl_wr1043nd_v4_gpio_keys[] __initdata = {
 	{
 		.desc		= "Reset button",
 		.type		= EV_KEY,
@@ -116,7 +112,7 @@ static struct gpio_keys_button tl_wr1043_v4_gpio_keys[] __initdata = {
 	},
 };
 
-static const struct ar8327_led_info tl_wr1043_leds_ar8327[] = {
+static const struct ar8327_led_info tl_wr1043nd_leds_ar8327[] = {
 	AR8327_LED_INFO(PHY0_0, HW, "tp-link:green:lan4"),
 	AR8327_LED_INFO(PHY1_0, HW, "tp-link:green:lan3"),
 	AR8327_LED_INFO(PHY2_0, HW, "tp-link:green:lan2"),
@@ -126,13 +122,13 @@ static const struct ar8327_led_info tl_wr1043_leds_ar8327[] = {
 
 // taken from 1043v2 /end
 
-static struct ar8327_pad_cfg TL_WR1043_V4_ar8327_pad0_cfg = {
+static struct ar8327_pad_cfg tl_wr1043nd_v4_ar8327_pad0_cfg = {
 	.mode = AR8327_PAD_MAC_SGMII,
 	.sgmii_delay_en = true,
 };
 
-static struct ar8327_platform_data TL_WR1043_V4_ar8327_data = {
-	.pad0_cfg = &TL_WR1043_V4_ar8327_pad0_cfg,
+static struct ar8327_platform_data tl_wr1043nd_v4_ar8327_data = {
+	.pad0_cfg = &tl_wr1043nd_v4_ar8327_pad0_cfg,
 	.port0_cfg = {
 		.force_link = 1,
 		.speed = AR8327_PORT_SPEED_1000,
@@ -142,17 +138,15 @@ static struct ar8327_platform_data TL_WR1043_V4_ar8327_data = {
 	},
 };
 
-
-static struct mdio_board_info TL_WR1043_V4_mdio0_info[] = {
+static struct mdio_board_info tl_wr1043nd_v4_mdio0_info[] = {
 	{
 		.bus_id = "ag71xx-mdio.0",
 		.phy_addr = 0,
-		.platform_data = &TL_WR1043_V4_ar8327_data,
+		.platform_data = &tl_wr1043nd_v4_ar8327_data,
 	},
 };
 
-
-static void TL_WR1043_V4_get_mac(const char *name, char *mac)
+static void tl_wr1043nd_v4_get_mac(const char *name, char *mac)
 {
 	u8 *nvram = (u8 *) KSEG1ADDR(TL_WR1043_V4_DEVDATA_ADDR);
 	int err;
@@ -163,38 +157,39 @@ static void TL_WR1043_V4_get_mac(const char *name, char *mac)
 		pr_err("no MAC address found for %s\n", name);
 }
 
-static void __init TL_WR1043_V4_setup(void)
+static void __init tl_wr1043nd_v4_setup(void)
 {
 	u8 *eeprom = (u8 *) KSEG1ADDR(TL_WR1043_V4_EEPROM_ADDR);
 	u8 wlan24mac[ETH_ALEN] = {};
 
-	ath79_register_m25p80(NULL);
+ //this copied from 1043v2
+	ath79_register_m25p80(&wr1043nd_v4_flash_data);
 
 	gpio_request_one(TL_WR1043_V4_GPIO_ENABLE_SWITCH,
 			 GPIOF_OUT_INIT_HIGH | GPIOF_EXPORT_DIR_FIXED,
 			 "Switch power");
 
-	TL_WR1043_V4_get_mac("lanmac=", ath79_eth0_data.mac_addr);
+	tl_wr1043nd_v4_get_mac("lanmac=", ath79_eth0_data.mac_addr);
 	ath79_eth0_data.phy_if_mode = PHY_INTERFACE_MODE_SGMII;
 	ath79_eth0_data.mii_bus_dev = &ath79_mdio0_device.dev;
 	ath79_eth0_data.phy_mask = BIT(0);
 
-	mdiobus_register_board_info(TL_WR1043_V4_mdio0_info,
-	                            ARRAY_SIZE(TL_WR1043_V4_mdio0_info));
+	mdiobus_register_board_info(tl_wr1043nd_v4_mdio0_info,
+	                            ARRAY_SIZE(tl_wr1043nd_v4_mdio0_info));
 
 	ath79_register_mdio(0, 0);
 	ath79_register_eth(0);
 
-	TL_WR1043_V4_get_mac("wlan24mac=", wlan24mac);
+	tl_wr1043nd_v4_get_mac("wlan24mac=", wlan24mac);
 	ath79_register_wmac(eeprom + TL_WR1043_V4_WMAC_CALDATA_OFFSET, wlan24mac);
 
-	ath79_register_leds_gpio(-1, ARRAY_SIZE(TL_WR1043_V4_leds_gpio),
-	                         TL_WR1043_V4_leds_gpio);
+	ath79_register_leds_gpio(-1, ARRAY_SIZE(tl_wr1043nd_v4_leds_gpio),
+	                         tl_wr1043nd_v4_leds_gpio);
 
 	ath79_register_gpio_keys_polled(-1, TL_WR1043_V4_KEYS_POLL_INTERVAL,
-	                                ARRAY_SIZE(TL_WR1043_V4_gpio_keys),
-	                                TL_WR1043_V4_gpio_keys);
+	                                ARRAY_SIZE(tl_wr1043nd_v4_gpio_keys),
+	                                tl_wr1043nd_v4_gpio_keys);
 }
 
 MIPS_MACHINE(ATH79_MACH_TL_WR1043ND_V4, "TL-WR1043ND-v4",
-	     "TP-LINK TL-WR1043ND v4", TL_WR1043_V4_setup);
+	     "TP-LINK TL-WR1043ND v4", tl_wr1043nd_v4_setup);
