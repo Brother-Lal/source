@@ -166,7 +166,7 @@ static void TL_WR1043_V4_get_mac(const char *name, char *mac)
 static void __init TL_WR1043_V4_setup(void)
 {
 	u8 *eeprom = (u8 *) KSEG1ADDR(TL_WR1043_V4_EEPROM_ADDR);
-	u8 wlan24mac[ETH_ALEN] = {}, wlan5mac[ETH_ALEN] = {};
+	u8 wlan24mac[ETH_ALEN] = {};
 
 	ath79_register_m25p80(NULL);
 
@@ -187,7 +187,6 @@ static void __init TL_WR1043_V4_setup(void)
 
 	TL_WR1043_V4_get_mac("wlan24mac=", wlan24mac);
 	ath79_register_wmac(eeprom + TL_WR1043_V4_WMAC_CALDATA_OFFSET, wlan24mac);
-
 
 	ath79_register_leds_gpio(-1, ARRAY_SIZE(TL_WR1043_V4_leds_gpio),
 	                         TL_WR1043_V4_leds_gpio);
