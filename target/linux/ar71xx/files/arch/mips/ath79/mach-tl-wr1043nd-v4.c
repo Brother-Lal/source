@@ -34,6 +34,7 @@
 #include "dev-leds-gpio.h"
 #include "dev-m25p80.h"
 #include "dev-wmac.h"
+#include "dev-usb.h"
 #include "machtypes.h"
 #include "nvram.h"
 
@@ -177,6 +178,7 @@ static void __init tl_wr1043nd_v4_setup(void)
 	mdiobus_register_board_info(tl_wr1043nd_v4_mdio0_info,
 	                            ARRAY_SIZE(tl_wr1043nd_v4_mdio0_info));
 
+	ath79_register_usb();
 	ath79_register_mdio(0, 0);
 	ath79_register_eth(0);
 
