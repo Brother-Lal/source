@@ -300,9 +300,9 @@ ar71xx_setup_interfaces()
 			"0:lan" "1:lan" "3@eth1"
 		;;
 	dir-869-a1|\
-	tl-wr1043nd-v4|\
 	epg5000|\
-	esr1750)
+	esr1750|\
+	tl-wr1043nd-v4)
 		ucidef_add_switch "switch0" \
 			"0@eth0" "1:lan:4" "2:lan:3" "3:lan:2" "4:lan:1" "5:wan"
 		;;
