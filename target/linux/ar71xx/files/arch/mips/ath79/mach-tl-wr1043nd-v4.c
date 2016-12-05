@@ -45,10 +45,12 @@
 #define TL_WR1043_V4_GPIO_SWITCH_MODE	8
 #define TL_WR1043_V4_GPIO_ENABLE_SWITCH	11
 
-#define TL_WR1043_V4_GPIO_LED_WLAN	19
-#define TL_WR1043_V4_GPIO_LED_USB	7
-#define TL_WR1043_V4_GPIO_LED_WPS	1
+#define TL_WR1043_V4_GPIO_LED_WLAN		19
+#define TL_WR1043_V4_GPIO_LED_USB			7
+#define TL_WR1043_V4_GPIO_LED_WPS			1
 #define TL_WR1043_V4_GPIO_LED_SYSTEM	6
+
+#define TL_WR1043_V4_GPIO_USB_POWER		8
 
 #define TL_WR1043_V4_KEYS_POLL_INTERVAL	20 /* msecs */
 #define TL_WR1043_V4_KEYS_DEBOUNCE_INTERVAL	(3 * TL_WR1043_V4_KEYS_POLL_INTERVAL)
@@ -191,6 +193,10 @@ static void __init tl_wr1043nd_v4_setup(void)
 	ath79_register_gpio_keys_polled(-1, TL_WR1043_V4_KEYS_POLL_INTERVAL,
 	                                ARRAY_SIZE(tl_wr1043nd_v4_gpio_keys),
 	                                tl_wr1043nd_v4_gpio_keys);
+	
+	gpio_request_one(TL_WR1043_V4_GPIO_USB_POWER,
+			 GPIOF_OUT_INIT_HIGH | GPIOF_EXPORT_DIR_FIXED,
+			 "USB power");
 }
 
 MIPS_MACHINE(ATH79_MACH_TL_WR1043ND_V4, "TL-WR1043ND-v4",
