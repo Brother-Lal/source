@@ -55,13 +55,11 @@
 #define TL_WR1043_V4_KEYS_POLL_INTERVAL		20 /* msecs */
 #define TL_WR1043_V4_KEYS_DEBOUNCE_INTERVAL	(3 * TL_WR1043_V4_KEYS_POLL_INTERVAL)
 
-// TODO
-#define TL_WR1043_V4_DEVDATA_ADDR		0x1f050000
-#define TL_WR1043_V4_DEVDATA_SIZE		0x10000
+#define TL_WR1043_V4_FLASH_END		0x1fffffff
+#define TL_WR1043_V4_MAC_OFFSET		0x7fe8b
 
 #define TL_WR1043_V4_EEPROM_ADDR		0x1fff0000
 #define TL_WR1043_V4_WMAC_CALDATA_OFFSET	0x1000
-#define TL_WR1043_V4_PCI_CALDATA_OFFSET		0x5000
 
 static struct gpio_led tl_wr1043nd_v4_leds_gpio[] __initdata = {
 	{
@@ -139,21 +137,10 @@ static struct mdio_board_info tl_wr1043nd_v4_mdio0_info[] = {
 	},
 };
 
-static void tl_wr1043nd_v4_get_mac(const char *name, char *mac)
-{
-	u8 *nvram = (u8 *) KSEG1ADDR(TL_WR1043_V4_DEVDATA_ADDR);
-	int err;
-
-	err = ath79_nvram_parse_mac_addr(nvram, TL_WR1043_V4_DEVDATA_SIZE,
-					 name, mac);
-	if (err)
-		pr_err("no MAC address found for %s\n", name);
-}
-
 static void __init tl_wr1043nd_v4_setup(void)
 {
+	u8 *mac = (u8 *) KSEG1ADDR(TL_WR1043_V4_FLASH_END - TL_WR1043_V4_MAC_OFFSET);
 	u8 *eeprom = (u8 *) KSEG1ADDR(TL_WR1043_V4_EEPROM_ADDR);
-	u8 wlan24mac[ETH_ALEN] = {};
 
  //this copied from 1043v2
 	ath79_register_m25p80(NULL);
@@ -162,7 +149,7 @@ static void __init tl_wr1043nd_v4_setup(void)
 			 GPIOF_OUT_INIT_HIGH | GPIOF_EXPORT_DIR_FIXED,
 			 "Switch power");
 
-	tl_wr1043nd_v4_get_mac("lanmac=", ath79_eth0_data.mac_addr);
+	ath79_init_mac(ath79_eth0_data.mac_addr, mac, 0);
 	ath79_eth0_data.phy_if_mode = PHY_INTERFACE_MODE_SGMII;
 	ath79_eth0_data.mii_bus_dev = &ath79_mdio0_device.dev;
 	ath79_eth0_data.phy_mask = BIT(0);
@@ -174,8 +161,7 @@ static void __init tl_wr1043nd_v4_setup(void)
 	ath79_register_mdio(0, 0);
 	ath79_register_eth(0);
 
-	tl_wr1043nd_v4_get_mac("wlan24mac=", wlan24mac);
-	ath79_register_wmac(eeprom + TL_WR1043_V4_WMAC_CALDATA_OFFSET, wlan24mac);
+	ath79_register_wmac(eeprom + TL_WR1043_V4_WMAC_CALDATA_OFFSET, mac);
 
 	ath79_register_leds_gpio(-1, ARRAY_SIZE(tl_wr1043nd_v4_leds_gpio),
 	                         tl_wr1043nd_v4_leds_gpio);
