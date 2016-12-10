@@ -63,16 +63,6 @@
 #define TL_WR1043_V4_WMAC_CALDATA_OFFSET	0x1000
 #define TL_WR1043_V4_PCI_CALDATA_OFFSET		0x5000
 
-// taken from 1043v2 start
-static const char *wr1043nd_v4_part_probes[] = {
-	"tp-link",
-	NULL,
-};
-
-static struct flash_platform_data wr1043nd_v4_flash_data = {
-	.part_probes	= wr1043nd_v4_part_probes,
-};
-
 static struct gpio_led tl_wr1043nd_v4_leds_gpio[] __initdata = {
 	{
 		.name		= "tp-link:green:wps",
@@ -166,7 +156,7 @@ static void __init tl_wr1043nd_v4_setup(void)
 	u8 wlan24mac[ETH_ALEN] = {};
 
  //this copied from 1043v2
-	ath79_register_m25p80(&wr1043nd_v4_flash_data);
+	ath79_register_m25p80(NULL);
 
 	gpio_request_one(TL_WR1043_V4_GPIO_ENABLE_SWITCH,
 			 GPIOF_OUT_INIT_HIGH | GPIOF_EXPORT_DIR_FIXED,
