@@ -133,15 +133,6 @@ static struct gpio_keys_button tl_wr1043nd_v4_gpio_keys[] __initdata = {
 		.active_low	= 1,
 	},
 };
-
-static const struct ar8327_led_info tl_wr1043nd_leds_ar8327[] = {
-	AR8327_LED_INFO(PHY0_0, HW, "tp-link:green:lan4"),
-	AR8327_LED_INFO(PHY1_0, HW, "tp-link:green:lan3"),
-	AR8327_LED_INFO(PHY2_0, HW, "tp-link:green:lan2"),
-	AR8327_LED_INFO(PHY3_0, HW, "tp-link:green:lan1"),
-	AR8327_LED_INFO(PHY4_0, HW, "tp-link:green:wan"),
-};
-
 // taken from 1043v2 /end
 
 static struct ar8327_pad_cfg tl_wr1043nd_v4_ar8327_pad0_cfg = {
