@@ -52,6 +52,12 @@
 
 #define TL_WR1043_V4_GPIO_USB_POWER		8
 
+#define TL_WR1043_V4_GPIO_LED_WAN		15
+#define TL_WR1043_V4_GPIO_LED_LAN1		9
+#define TL_WR1043_V4_GPIO_LED_LAN2		14
+#define TL_WR1043_V4_GPIO_LED_LAN3		21
+#define TL_WR1043_V4_GPIO_LED_LAN4		20
+
 #define TL_WR1043_V4_KEYS_POLL_INTERVAL		20 /* msecs */
 #define TL_WR1043_V4_KEYS_DEBOUNCE_INTERVAL	(3 * TL_WR1043_V4_KEYS_POLL_INTERVAL)
 
@@ -80,6 +86,31 @@ static struct gpio_led tl_wr1043nd_v4_leds_gpio[] __initdata = {
 	{
 		.name		= "tp-link:green:usb",
 		.gpio		= TL_WR1043_V4_GPIO_LED_USB,
+		.active_low	= 1,
+	},
+	{
+		.name		= "tp-link:green:wan",
+		.gpio		= TL_WR1043_V4_GPIO_LED_WAN,
+		.active_low	= 1,
+	},
+	{
+		.name		= "tp-link:green:lan1",
+		.gpio		= TL_WR1043_V4_GPIO_LED_LAN1,
+		.active_low	= 1,
+	},
+	{
+		.name		= "tp-link:green:lan2",
+		.gpio		= TL_WR1043_V4_GPIO_LED_LAN2,
+		.active_low	= 1,
+	},
+	{
+		.name		= "tp-link:green:lan3",
+		.gpio		= TL_WR1043_V4_GPIO_LED_LAN3,
+		.active_low	= 1,
+	},
+	{
+		.name		= "tp-link:green:lan4",
+		.gpio		= TL_WR1043_V4_GPIO_LED_LAN4,
 		.active_low	= 1,
 	},
 };
