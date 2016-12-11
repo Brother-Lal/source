@@ -41,10 +41,6 @@
 #define TL_WR1043_V4_GPIO_BTN_RESET		2
 #define TL_WR1043_V4_GPIO_BTN_RFKILL		5
 
-// 1:1 from dir869 TODO
-#define TL_WR1043_V4_GPIO_SWITCH_MODE		8
-#define TL_WR1043_V4_GPIO_ENABLE_SWITCH		11
-
 #define TL_WR1043_V4_GPIO_LED_WLAN		19
 #define TL_WR1043_V4_GPIO_LED_USB		7
 #define TL_WR1043_V4_GPIO_LED_WPS		1
@@ -133,7 +129,6 @@ static struct gpio_keys_button tl_wr1043nd_v4_gpio_keys[] __initdata = {
 		.active_low	= 1,
 	},
 };
-// taken from 1043v2 /end
 
 static struct ar8327_pad_cfg tl_wr1043nd_v4_ar8327_pad0_cfg = {
 	.mode = AR8327_PAD_MAC_SGMII,
@@ -164,12 +159,7 @@ static void __init tl_wr1043nd_v4_setup(void)
 	u8 *mac = (u8 *) KSEG1ADDR(TL_WR1043_V4_FLASH_END - TL_WR1043_V4_MAC_OFFSET);
 	u8 *eeprom = (u8 *) KSEG1ADDR(TL_WR1043_V4_EEPROM_ADDR);
 
- //this copied from 1043v2
 	ath79_register_m25p80(NULL);
-
-	gpio_request_one(TL_WR1043_V4_GPIO_ENABLE_SWITCH,
-			 GPIOF_OUT_INIT_HIGH | GPIOF_EXPORT_DIR_FIXED,
-			 "Switch power");
 
 	ath79_init_mac(ath79_eth0_data.mac_addr, mac, 0);
 	ath79_eth0_data.phy_if_mode = PHY_INTERFACE_MODE_SGMII;
