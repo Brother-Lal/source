@@ -764,8 +764,7 @@ define Device/tl-wr1043nd-v4
     DEVICE_PACKAGES := kmod-usb-core kmod-usb2 kmod-usb-ledtrig-usbport
     BOARDNAME := TL-WR1043ND-v4
     DEVICE_PROFILE := TLWR1043
-    TPLINK_HWID := 0
-    TPLINK_HWREV := 0
+    TPLINK_HWID :=  0x10430004
     TPLINK_FLASHLAYOUT := 16Msafeloader
     MTDPARTS := spi0.0:128k(u-boot)ro,1536k(kernel),14016k(rootfs),128k(product-info)ro,320k(config)ro,64k(partition-table)ro,128k(logs)ro,64k(ART)ro,15552k@0x20000(firmware)
     IMAGE_SIZE := 15552k
