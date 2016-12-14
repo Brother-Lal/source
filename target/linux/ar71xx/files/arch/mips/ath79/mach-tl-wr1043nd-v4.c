@@ -57,8 +57,7 @@
 #define TL_WR1043_V4_KEYS_POLL_INTERVAL		20 /* msecs */
 #define TL_WR1043_V4_KEYS_DEBOUNCE_INTERVAL	(3 * TL_WR1043_V4_KEYS_POLL_INTERVAL)
 
-#define TL_WR1043_V4_FLASH_END		0x20000000
-#define TL_WR1043_V4_MAC_OFFSET		0x7fe8c
+#define TL_WR1043_V4_MAC_LOCATION		0x1ff80174
 
 #define TL_WR1043_V4_EEPROM_ADDR		0x1fff0000
 #define TL_WR1043_V4_WMAC_CALDATA_OFFSET	0x1000
@@ -156,7 +155,7 @@ static struct mdio_board_info tl_wr1043nd_v4_mdio0_info[] = {
 
 static void __init tl_wr1043nd_v4_setup(void)
 {
-	u8 *mac = (u8 *) KSEG1ADDR(TL_WR1043_V4_FLASH_END - TL_WR1043_V4_MAC_OFFSET);
+	u8 *mac = (u8 *) KSEG1ADDR(TL_WR1043_V4_MAC_LOCATION);
 	u8 *eeprom = (u8 *) KSEG1ADDR(TL_WR1043_V4_EEPROM_ADDR);
 
 	ath79_register_m25p80(NULL);
