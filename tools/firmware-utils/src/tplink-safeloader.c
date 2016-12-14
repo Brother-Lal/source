@@ -854,7 +854,7 @@ int main(int argc, char *argv[]) {
 		info = &eap120_info;
 	else if (strcmp(board, "ARCHERC9") == 0)
 		info = &e9_info;
-	else if (strcmp(board, "TLWR1043NDV4_EU") == 0)
+	else if (strcmp(board, "TLWR1043NDV4") == 0)
 		info = &tlwr1043ndv4_info;
 	else
 		error(1, 0, "unsupported board %s", board);
