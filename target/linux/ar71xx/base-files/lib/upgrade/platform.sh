@@ -277,6 +277,7 @@ platform_check_image() {
 	tew-732br|\
 	tew-823dru|\
 	tl-wr942n-v1|\
+	tl-wr1043n-v5|\
 	unifi-outdoor|\
 	unifiac-lite|\
 	unifiac-pro|\
