@@ -96,6 +96,12 @@ define U-Boot/Hummingbird_A31
   NAME:=Hummingbird A31 board
 endef
 
+define U-Boot/Marsboard
+  BUILD_SUBTARGET:=cortexa8
+  NAME:=Marsboard
+  BUILD_DEVICES:=sun4i-a10-marsboard
+endef
+
 define U-Boot/Mele_M9
   BUILD_SUBTARGET:=cortexa7
   NAME:=Mele M9 (A31)
@@ -126,10 +132,28 @@ define U-Boot/Lamobo_R1
   BUILD_DEVICES:=sun7i-a20-lamobo-r1
 endef
 
+define U-Boot/nanopi_neo
+  BUILD_SUBTARGET:=cortexa7
+  NAME:=U-Boot for NanoPi NEO (H3)
+  BUILD_DEVICES:=sun8i-h3-nanopi-neo
+endef
+
+define U-Boot/orangepi_r1
+  BUILD_SUBTARGET:=cortexa7
+  NAME:=Orange Pi R1 (H2+)
+  BUILD_DEVICES:=sun8i-h2-plus-orangepi-r1
+endef
+
 define U-Boot/orangepi_plus
   BUILD_SUBTARGET:=cortexa7
   NAME:=Orange Pi Plus (H3)
   BUILD_DEVICES:=sun8i-h3-orangepi-plus
+endef
+
+define U-Boot/orangepi_2
+  BUILD_SUBTARGET:=cortexa7
+  NAME:=Orange Pi 2 (H3)
+  BUILD_DEVICES:=sun8i-h3-orangepi-2
 endef
 
 define U-Boot/pangolin
@@ -164,7 +188,10 @@ UBOOT_TARGETS := \
 	Linksprite_pcDuino \
 	Linksprite_pcDuino3 \
 	Lamobo_R1 \
+	nanopi_neo \
+	orangepi_r1 \
 	orangepi_plus \
+	orangepi_2 \
 	pangolin \
 	pine64_plus
 
