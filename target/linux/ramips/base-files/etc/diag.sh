@@ -188,6 +188,7 @@ get_status_led() {
 		status_led="$board:yellow:status"
 		;;
 	miwifi-mini|\
+	ionik-cloud|\
 	zte-q7)
 		status_led="$board:red:status"
 		;;

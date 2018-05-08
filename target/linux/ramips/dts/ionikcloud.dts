@@ -1,0 +1,105 @@
+/dts-v1/;
+
+#include "rt5350.dtsi"
+
+/ {
+   compatible = "ionikcloud", "ralink,rt5350-soc";
+   model = "i.onik Wi-Fi Cloud Device";
+
+        memory@0 {
+                device_type = "memory";
+                reg = <0x0 0x4000000>;
+        };
+
+
+   gpio-leds {
+       compatible = "gpio-leds";
+
+       status {
+           label = "ionikcloud:red:status";
+           gpios = <&gpio0 9 1>;
+       };
+   };
+
+   gpio-keys-polled {
+       compatible = "gpio-keys-polled";
+       #address-cells = <1>;
+       #size-cells = <0>;
+       poll-interval = <20>;
+
+       power {
+           label = "power";
+           gpios = <&gpio0 0 1>;
+           linux,code = <0x116>;
+       };
+
+       reset {
+           label = "reset";
+           gpios = <&gpio0 10 1>;
+           linux,code = <0x198>;
+       };
+   };
+};
+
+
+&spi0 {
+   status = "okay";
+
+   en25q64@0 {
+       #address-cells = <1>;
+       #size-cells = <1>;
+       compatible = "jedec,spi-nor";
+       reg = <0>;
+       linux,modalias = "m25p80", "en25q64";
+       spi-max-frequency = <10000000>;
+
+       partition@0 {
+           label = "u-boot";
+           reg = <0x0 0x30000>;
+           read-only;
+       };
+
+       partition@30000 {
+           label = "u-boot-env";
+           reg = <0x30000 0x10000>;
+           read-only;
+       };
+
+       factory: partition@40000 {
+           label = "factory";
+           reg = <0x40000 0x10000>;
+           read-only;
+       };
+
+       partition@50000 {
+           label = "recover";
+           reg = <0x50000 0x1c0000>;
+       };
+
+       partition@210040 {
+           label = "firmware";
+           reg = <0x210000 0x5f0000>;
+       };
+   };
+};
+
+&pinctrl {
+   state_default: pinctrl0 {
+       gpio {
+           ralink,group = "i2c", "jtag", "rgmii", "mdio", "uartf";
+           ralink,function = "gpio";
+       };
+   };
+};
+
+&ehci {
+   status = "okay";
+};
+
+&ohci {
+   status = "okay";
+};
+
+&wmac {
+   ralink,mtd-eeprom = <&factory 0>;
+};

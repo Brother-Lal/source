@@ -207,6 +207,7 @@ ramips_setup_interfaces()
 			"0:lan" "1:wan" "6@eth0"
 		;;
 	b2c|\
+	ionik-cloud|\
 	nw718|\
 	psr-680w|\
 	sl-r7205|\

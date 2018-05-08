@@ -369,6 +369,18 @@ define Device/hw550-3g
 endef
 TARGET_DEVICES += hw550-3g
 
+
+define Device/ionikcloud
+  DTS := ionikcloud
+  DEVICE_TITLE :=I.onik cloud devices
+  DEVICE_PACKAGES:=\
+	kmod-ledtrig-netdev kmod-ledtrig-timer kmod-leds-gpio \
+	kmod-usb-core kmod-usb-ohci kmod-usb2 kmod-usb-net usbutils \
+	kmod-scsi-core kmod-scsi-generic kmod-fs-ext4 kmod-fs-msdos \
+	kmod-usb-storage kmod-usb-storage-extras block-mount wpad
+endef
+TARGET_DEVICES += ionikcloud 
+
 define Device/ip2202
   DTS := IP2202
   DEVICE_TITLE := Poray IP2202
